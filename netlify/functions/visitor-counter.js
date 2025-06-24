@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 const path = require('path');
 // Use the correct service account key filename (update if needed)
-const serviceAccount = require('./counternt-firebase-adminsdk-fbsvc-9a95944395.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 if (!admin.apps.length) {
   admin.initializeApp({
