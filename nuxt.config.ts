@@ -11,7 +11,7 @@ export default defineNuxtConfig({
         { name: 'description', content: 'บริการของสถาบันวิชาการ NTAcademy' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/newNTacademy/assets/imgLogo/logo.png' }
+        { rel: 'icon', type: 'image/x-icon', href: '/newNTacademy/imgLogo/logo.png' }
       ]
     }
   },

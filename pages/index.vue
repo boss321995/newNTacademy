@@ -14,6 +14,9 @@
       >
         ดูบริการทั้งหมด
       </NuxtLink>
+      <div class="mt-4 text-sm text-gray-500">
+        จำนวนผู้เข้าชม: {{ visitorCount }}
+      </div>
     </div>
     <!-- Banner Section -->
     <div class="relative w-full" style="padding-left:10%;padding-right:10%;">
@@ -23,7 +26,7 @@
             v-for="(img, i) in banners"
             v-show="i === current"
             :key="img"
-            :src="img"
+            :src="baseUrl + img"
             class="absolute inset-0 w-full h-full object-cover"
             alt="Banner"
           />
@@ -75,7 +78,7 @@
             class="bg-white rounded shadow p-0 text-center flex flex-col h-full overflow-hidden"
           >
             <img
-              :src="service.img"
+              :src="baseUrl + service.img"
               :alt="service.title"
               class="w-full h-40 object-cover"
             />
@@ -94,18 +97,20 @@
       </div>
     </div>
     <!-- Sport Calendar -->
-    <SportCalendar />
+    <!-- <SportCalendar /> -->
     <Footer />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import Footer from '~/components/Footer.vue'
 
+const baseUrl = useRuntimeConfig().app.baseURL || '/'
 const banners = [
-  'assets/img/Gemini_Generated_Image_l0vpcgl0vpcgl0vp.png',
-  'assets/img/Gemini_Generated_Image_2yi63a2yi63a2yi6.png',
-  'assets/img/Gemini_Generated_Image_2yi63b2yi63b2yi6.png',
+  'img/Gemini_Generated_Image_l0vpcgl0vpcgl0vp.png',
+  'img/Gemini_Generated_Image_2yi63a2yi63a2yi6.png',
+  'img/Gemini_Generated_Image_2yi63b2yi63b2yi6.png',
 ]
 const current = ref(0)
 let bannerTimer
@@ -128,27 +133,27 @@ onUnmounted(() => clearInterval(bannerTimer))
 const services = [
   {
     title: 'บริการจัดหลักสูตร',
-    img: 'assets/img/LINE_ALBUM_กรมอุตุวิทยา_230705_50.jpg',
+    img: 'img/LINE_ALBUM_กรมอุตุวิทยา_230705_50.jpg',
     desc: 'หลักสูตรด้านเทคโนโลยี: Power BI, Python, Data Analytics, Web Application, Cyber Security, Generative AI ฯลฯ หลักสูตรด้านการบริหาร: Digital Marketing, การสื่อสารที่มีประสิทธิภาพ, การบริหารจัดการ และหลักสูตรมากมายที่ช่วยพัฒนาทักษะบุคลากรของคุณ • ทีมวิทยากรมากประสบการณ์ พร้อมถ่ายทอดความรู้ที่นำไปประยุกต์ใช้ได้จริง • บริการให้คำปรึกษาและออกแบบหลักสูตรที่ตรงกับความต้องการขององค์กร เพื่อให้การฝึกอบรมเกิดประสิทธิภาพสูงสุด'
   },
   {
     title: 'อาคารสถานที่/ห้องอบรม/ห้องจัดเลี้ยง',
-    img: 'assets/img/ห้องจัดเลี้ยง/DSC_0554 - Copy.JPG',
+    img: 'img/ห้องจัดเลี้ยง/DSC_0554 - Copy.JPG',
     desc: 'มีห้องจัดเลี้ยงสำหรับการจัดงานแต่งงาน หรืองานเลี้ยงสังสรรค์ในรูปแบบต่างๆ เชิญสัมผัสการให้บริการจัดเลี้ยงอาหารหลายรูปแบบสำหรับการประชุม อบรม สัมมนา งานเลี้ยงรับรอง งานเลี้ยงเปิดตัวสินค้าใหม่ งานสังสรรค์โอกาสต่างๆ งานแข่งขันกีฬา งานมงคลสมรส ในรูปแบบตามความต้องการของลูกค้า'
   },
   {
     title: 'โรงแรม/หอพัก',
-    img: 'assets/img/โรงแรม/IMG_6853.JPG',
+    img: 'img/โรงแรม/IMG_6853.JPG',
     desc: 'บริการหอพักสำหรับจัดอบรม / สัมมนาเป็นหมู่คณะด้วยบรรยากาศอันแสนสบาย เป็นส่วนตัวและการต้อนรับที่อบอุ่น สู่ห้องพักที่พรั่งพร้อมด้วยสิ่งอำนวยความสะดวกที่ทันสมัยกว่า 160 ห้อง เพิ่มความมั่นใจในความปลอดภัยด้วยอุปกรณ์ป้องกันอัคคีภัยที่เปี่ยมประสิทธิภาพ และระบบรักษาความปลอดภัยตลอด 24 ชั่วโมง'
   },
   {
     title: 'สนามกีฬาในร่ม/กลางแจ้ง',
-    img: 'assets/img/Sport Club/_DSC8016.JPG',
+    img: 'img/Sport Club/_DSC8016.JPG',
     desc: 'เสริมสร้างสุขภาพที่ดีไปพร้อม ๆ กับผ่อนคลายความเหน็ดเหนื่อยจากการทำงาน เชิญเข้ามาสัมผัส Sport Club ที่สมบูรณ์แบบด้วยเครื่องออกกำลังกายที่ทันสมัยนานาชนิด โดยมีครูฝึกคอยให้คำแนะนำและดูแลท่านตลอดเวลา พร้อมห้องซาวน่า ห้องกีฬาอเนกประสงค์ สนามแบดมินตัน สนามฟุตบอล และอุปกรณ์กีฬาต่าง ๆ ที่เตรียมไว้คอยให้บริการ'
   },
   {
     title: 'บริการสื่อสิ่งพิมพ์',
-    img: 'assets/img/print_media_service/295898.jpg',
+    img: 'img/print_media_service/295898.jpg',
     desc: 'งานบริการสิ่งพิมพ์ รับพิมพ์งาน นามบัตร, หนังสือ, วารสาร, แผ่นปลิว, แผ่นพับ, โปสเตอร์ และแบบพิมพ์เอกสารทั่วไป ด้วยเครื่องพิมพ์ระบบออฟเซท 4 สี และระบบดิจิตอล 4 สี ที่สวยงามและมีคุณภาพ'
   }
 ]
@@ -178,6 +183,17 @@ watch(pause, (val) => {
     serviceTimer = setInterval(() => {
       if (!pause.value) nextService()
     }, 7500)
+  }
+})
+
+const visitorCount = ref(0)
+onMounted(async () => {
+  try {
+    const res = await fetch('/api/counter', { method: 'POST' })
+    const data = await res.json()
+    visitorCount.value = data.count
+  } catch (e) {
+    visitorCount.value = 'N/A'
   }
 })
 </script>
