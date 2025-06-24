@@ -3,8 +3,8 @@ import { join } from 'path'
 
 export default defineEventHandler(async (event) => {
   // กำหนด path ของไฟล์
-  const counterPath = join(process.cwd(), 'counter.json')
-  const ipLogPath = join(process.cwd(), 'ip_log.json')
+  const counterPath = join(process.cwd(), 'server', 'counter.json')
+  const ipLogPath = join(process.cwd(), 'server', 'ip_log.json')
 
   // ดึง IP ผู้เข้าใช้งาน
   const ip = getRequestIP(event)

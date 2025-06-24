@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# Ignore Firebase service account key
+netlify/functions/counternt-firebase-adminsdk-fbsvc-9a95944395.json

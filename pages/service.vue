@@ -179,6 +179,15 @@
                             style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;"
                           />
                         </template>
+                        <template v-else-if="pdfError && pdfError[i]">
+                          <div class="flex flex-col items-center justify-center h-full w-full">
+                            <svg class="w-12 h-12 text-red-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="text-xs text-red-600">ไม่สามารถสร้าง preview PDF ได้</span>
+                            <span class="text-xs text-gray-400">คลิกเพื่อดูไฟล์ PDF</span>
+                          </div>
+                        </template>
                         <template v-else>
                           <div class="text-center">
                             <svg class="w-16 h-16 text-red-500 mb-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,7 +285,7 @@
             <template v-if="lightboxType === 'pdf'">
               <iframe 
                 :src="lightbox" 
-                class="w-[90vw] h-[90vh] bg-white rounded-lg shadow-2xl border-4 border-red-500" 
+                class="w-[90vw] h-[90vh] bg-white rounded-lg shadow-2xl" 
                 frameborder="0" 
                 @error="onIframeError"
                 @load="onIframeLoad"
@@ -305,8 +314,8 @@
               
               <img
                 :src="lightbox"
-                :class="[
-                  'max-w-full max-h-full object-contain rounded-lg shadow-2xl border-4 border-red-500 transition-opacity duration-300',
+                :class=" [
+                  'max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-opacity duration-300',
                   lightboxImageLoaded ? 'opacity-100' : 'opacity-0'
                 ]"
                 :alt="'lightbox image: ' + lightbox"
@@ -459,17 +468,17 @@ watch(selected, async (newService) => {
       pdfLoading.value[i] = true
       try {
         const url = getImageUrl(info)
-        console.log('PDF thumbnail url:', url)
+        // console.log('PDF thumbnail url:', url)
         const thumb = await renderPdfThumbnail(url, 200)
         if (thumb) {
           pdfThumbnails.value[i] = thumb
         } else {
           pdfError.value[i] = true
-          console.warn('No thumbnail generated for', url)
+          // console.warn('No thumbnail generated for', url)
         }
       } catch (e) {
         pdfError.value[i] = true
-        console.error('PDF thumbnail error:', e)
+        // console.error('PDF thumbnail error:', e)
       } finally {
         pdfLoading.value[i] = false
       }
@@ -559,7 +568,6 @@ function openInfographic(info) {
   if (isPdf(info)) {
     // PDF preview
     const url = getImageUrl(info)
-    // console.log('openInfographic PDF url:', url)
     lightbox.value = url
     lightboxType.value = 'pdf'
     lightboxImageLoaded.value = true // no loading for PDF
@@ -606,4 +614,7 @@ function handleInfographicImageError(event, i) {
 
 <style scoped>
 /* Add any component-specific styles here */
+#print {
+  display: none !important;
+}
 </style>

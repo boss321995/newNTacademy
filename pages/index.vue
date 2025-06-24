@@ -14,9 +14,6 @@
       >
         ดูบริการทั้งหมด
       </NuxtLink>
-      <div class="mt-4 text-sm text-gray-500">
-        จำนวนผู้เข้าชม: {{ visitorCount }}
-      </div>
     </div>
     <!-- Banner Section -->
     <div class="relative w-full" style="padding-left:10%;padding-right:10%;">
@@ -98,7 +95,7 @@
     </div>
     <!-- Sport Calendar -->
     <!-- <SportCalendar /> -->
-    <Footer />
+    <Footer :visitorCount="visitorCount" />
   </div>
 </template>
 
@@ -186,14 +183,14 @@ watch(pause, (val) => {
   }
 })
 
-const visitorCount = ref(0)
+const visitorCount = ref('')
 onMounted(async () => {
   try {
-    const res = await fetch('/api/counter', { method: 'POST' })
+    const res = await fetch('/.netlify/functions/visitor-counter')
     const data = await res.json()
     visitorCount.value = data.count
   } catch (e) {
-    visitorCount.value = 'N/A'
+    visitorCount.value = 'ไม่สามารถนับผู้เข้าชมได้'
   }
 })
 </script>
